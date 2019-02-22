@@ -8,7 +8,12 @@ defmodule Waiter.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      Plug.Adapters.Cowboy.child_spec(scheme: :http, plug: Waiter.Router, options: [port: 8080])
+      Plug.Adapters.Cowboy.child_spec(
+        scheme: :http,
+        plug: Waiter.Router,
+        options: [port: 8080]
+      ),
+      {Redix, name: :redix}
       # Starts a worker by calling: Waiter.Worker.start_link(arg)
       # {Waiter.Worker, arg}
     ]

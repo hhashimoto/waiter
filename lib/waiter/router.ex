@@ -36,6 +36,15 @@ defmodule Waiter.Router do
     send_resp(conn, 200, json)
   end
 
+  post "/register" do
+    {:ok, body, conn} = read_body(conn)
+    req = body
+      |> Msgpax.unpack!()
+    ios_tokens = Map.get(req, "ios")
+    ret = Waiter.Redis.rpush(:redix, "ios_token", ios_tokens)
+    send_resp(conn, 200, Integer.to_string(ret))
+  end
+
   match _ do
     send_resp(conn, 404, "not found")
   end

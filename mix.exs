@@ -14,7 +14,12 @@ defmodule Waiter.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :cowboy, :plug, :poison],
+      extra_applications: [
+        :logger,
+        :cowboy,
+        :plug,
+        :poison
+      ],
       mod: {Waiter.Application, []}
     ]
   end
@@ -24,8 +29,9 @@ defmodule Waiter.MixProject do
     [
       {:cowboy, "~> 2.6"},
       {:plug, "~> 1.7"},
+      {:plug_cowboy, "~> 2.0"},
       {:poison, "~> 4.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:msgpax, "~> 2.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

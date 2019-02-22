@@ -18,6 +18,24 @@ defmodule Waiter.Router do
     send_resp(conn, 201, "created: #{get_in(body, ["message"])}")
   end
 
+  # json => msgpack
+  post "/to_msgpack" do
+    {:ok, body, conn} = read_body(conn)
+    bin = body
+      |> Poison.decode!()
+      |> Msgpax.pack!()
+    send_resp(conn, 200, bin)
+  end
+
+  # msgpack => json
+  post "/to_json" do
+    {:ok, body, conn} = read_body(conn)
+    json = body
+      |> Msgpax.unpack!()
+      |> Poison.encode!()
+    send_resp(conn, 200, json)
+  end
+
   match _ do
     send_resp(conn, 404, "not found")
   end
